@@ -87,40 +87,68 @@ export default function App() {
         setEtapa(1);
     };
 
+    // Calcular progresso do questionário
+    const gruposPreenchidos = respostas.filter(g => g.A && g.B && g.C && g.D).length;
+    const progressoPct = Math.round((gruposPreenchidos / 24) * 100);
+
     return (
-        <div className="min-h-screen bg-brand-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-2xl bg-white rounded-xl shadow-xl p-6 md:p-8">
-                <div className="text-center mb-6">
-                    <span className="bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+        <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
+            <div className="w-full max-w-2xl bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-pink-100 p-6 sm:p-8 md:p-10 transition-all duration-300">
+                
+                {/* Header Institucional */}
+                <header className="text-center mb-8 pb-4 border-b border-gray-100">
+                    <span className="inline-block bg-brand-50 text-brand-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
                         Maria Charmosa · Consultoria Maxi Silva
                     </span>
-                </div>
+                    <h1 className="text-xs text-gray-400 mt-2 tracking-wide uppercase">Avaliação de Perfil Comportamental DISC</h1>
+                </header>
 
-                {etapa === 1 && (
-                    <EtapaIdentificacao 
-                        dadosUser={dadosUser} 
-                        setDadosUser={setDadosUser} 
-                        onAvancar={(e) => { e.preventDefault(); setEtapa(2); }} 
-                        erro={erro} 
-                    />
-                )}
-
+                {/* Barra de Progresso (Visível apenas na Etapa 2) */}
                 {etapa === 2 && (
-                    <EtapaQuestionario 
-                        respostas={respostas} 
-                        onRespostaChange={handleRespostaChange} 
-                        onFinalizar={finalizarTeste} 
-                        erro={erro} 
-                    />
+                    <div className="mb-6 bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <div className="flex justify-between text-xs font-semibold text-gray-600 mb-1.5">
+                            <span>Progresso do Questionário</span>
+                            <span>{gruposPreenchidos} de 24 grupos ({progressoPct}%)</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                            <div className="bg-brand-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progressoPct}%` }}></div>
+                        </div>
+                    </div>
                 )}
 
-                {etapa === 3 && (
-                    <EtapaResultado 
-                        resultado={resultadoFinal} 
-                        onReiniciar={reiniciar} 
-                    />
-                )}
+                {/* Conteúdo das Etapas */}
+                <section>
+                    {etapa === 1 && (
+                        <EtapaIdentificacao 
+                            dadosUser={dadosUser} 
+                            setDadosUser={setDadosUser} 
+                            onAvancar={(e) => { e.preventDefault(); setEtapa(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} 
+                            erro={erro} 
+                        />
+                    )}
+
+                    {etapa === 2 && (
+                        <EtapaQuestionario 
+                            respostas={respostas} 
+                            onRespostaChange={handleRespostaChange} 
+                            onFinalizar={finalizarTeste} 
+                            erro={erro} 
+                        />
+                    )}
+
+                    {etapa === 3 && (
+                        <EtapaResultado 
+                            resultado={resultadoFinal} 
+                            onReiniciar={reiniciar} 
+                        />
+                    )}
+                </section>
             </div>
-        </div>
+
+            {/* Rodapé discreto */}
+            <footer className="mt-6 text-center text-xs text-brand-700/70 font-medium">
+                © Maria Charmosa — Desenvolvimento de Equipe e Performance no Varejo
+            </footer>
+        </main>
     );
 }
