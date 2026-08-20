@@ -1,35 +1,40 @@
 export default function EtapaIdentificacao({ dadosUser, setDadosUser, onAvancar, erro }) {
     return (
-        <form onSubmit={onAvancar} className="space-y-4">
-            <h2 className="text-2xl font-bold text-brand-600 text-center">Avaliação de Perfil DISC</h2>
-            <p className="text-sm text-gray-500 text-center">Identificação inicial do colaborador</p>
-            
+        <form onSubmit={onAvancar} className="space-y-5 animate-fade-in">
+            <div className="bg-pink-50/50 border border-pink-100 p-4 rounded-2xl text-xs text-slate-600 leading-relaxed">
+                👋 Olá! Este questionário foi desenhado para entender seu estilo natural de trabalho na <strong>Maria Charmosa</strong>. Responda com sinceridade, pensando no seu dia a dia na loja. Não há respostas certas ou erradas.
+            </div>
+
             <div>
-                <label className="block text-sm font-medium mb-1">Nome Completo:</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Nome Completo</label>
                 <input 
                     type="text" 
                     value={dadosUser.nome} 
                     onChange={e => setDadosUser({...dadosUser, nome: e.target.value})} 
-                    className="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-brand-500 outline-none" 
+                    placeholder="Digite seu nome completo"
+                    className="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition" 
                     required 
                 />
             </div>
+
             <div>
-                <label className="block text-sm font-medium mb-1">Função / Cargo:</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Função / Cargo</label>
                 <input 
                     type="text" 
                     value={dadosUser.cargo} 
                     onChange={e => setDadosUser({...dadosUser, cargo: e.target.value})} 
-                    className="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-brand-500 outline-none" 
+                    placeholder="Ex: Consultora de Vendas, Caixa..."
+                    className="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition" 
                     required 
                 />
             </div>
+
             <div>
-                <label className="block text-sm font-medium mb-1">Setor Principal:</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Setor Principal</label>
                 <select 
                     value={dadosUser.setor} 
                     onChange={e => setDadosUser({...dadosUser, setor: e.target.value})} 
-                    className="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-brand-500 outline-none"
+                    className="w-full border border-slate-200 bg-slate-50/50 rounded-xl px-4 py-3 text-sm focus:bg-white focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition"
                 >
                     <option value="Vendas">Vendas</option>
                     <option value="Caixa">Caixa</option>
@@ -38,23 +43,25 @@ export default function EtapaIdentificacao({ dadosUser, setDadosUser, onAvancar,
                     <option value="Apoio">Apoio</option>
                 </select>
             </div>
-            <div className="bg-gray-50 p-3 rounded-lg text-xs text-gray-600 h-28 overflow-y-auto border">
-                Compreendo que a avaliação tem caráter de desenvolvimento profissional e organizacional, vinculada à consultoria prestada por Maxi Silva. Autorizo a aplicação e elaboração do perfil comportamental.
+
+            <div className="bg-slate-50 p-4 rounded-xl text-xs text-slate-500 h-28 overflow-y-auto border border-slate-200">
+                <strong>Termo de Esclarecimento:</strong> Compreendo que a avaliação tem caráter de desenvolvimento profissional e organizacional, vinculada à consultoria prestada por Maxi Silva. Autorizo a aplicação e elaboração do perfil comportamental.
             </div>
-            <label className="flex items-center space-x-2 text-sm cursor-pointer">
+
+            <label className="flex items-center space-x-3 text-sm cursor-pointer select-none">
                 <input 
                     type="checkbox" 
                     checked={dadosUser.concordo} 
                     onChange={e => setDadosUser({...dadosUser, concordo: e.target.checked})} 
-                    className="rounded text-brand-600 focus:ring-brand-500 w-4 h-4" 
+                    className="rounded text-pink-600 focus:ring-pink-500 w-5 h-5 border-slate-300" 
                 />
-                <span>Li e concordo com os termos de aplicação.</span>
+                <span className="font-medium text-slate-700">Li e concordo com os termos de aplicação.</span>
             </label>
 
-            {erro && <p className="text-red-500 text-sm text-center font-medium">{erro}</p>}
+            {erro && <div className="bg-red-50 border border-red-200 text-red-600 text-sm p-3 rounded-xl text-center font-medium">{erro}</div>}
 
-            <button type="submit" className="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-lg transition duration-200">
-                Iniciar Questionário
+            <button type="submit" className="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-pink-600/20 transition duration-200 transform active:scale-[0.99]">
+                Iniciar Questionário →
             </button>
         </form>
     );
