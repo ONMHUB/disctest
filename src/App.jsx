@@ -87,37 +87,54 @@ export default function App() {
         setEtapa(1);
     };
 
-    // Calcular progresso do questionário
     const gruposPreenchidos = respostas.filter(g => g.A && g.B && g.C && g.D).length;
     const progressoPct = Math.round((gruposPreenchidos / 24) * 100);
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
-            <div className="w-full max-w-2xl bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-pink-100 p-6 sm:p-8 md:p-10 transition-all duration-300">
+        <div className="min-h-screen w-full grid place-items-center p-4 sm:p-6 md:p-8">
+            <div className="w-full max-w-3xl bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl border border-pink-100/80 p-6 sm:p-8 md:p-12 animate-fade-in my-auto">
                 
-                {/* Header Institucional */}
-                <header className="text-center mb-8 pb-4 border-b border-gray-100">
-                    <span className="inline-block bg-brand-50 text-brand-700 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
-                        Maria Charmosa · Consultoria Maxi Silva
-                    </span>
-                    <h1 className="text-xs text-gray-400 mt-2 tracking-wide uppercase">Avaliação de Perfil Comportamental DISC</h1>
-                </header>
+                {/* Header de Marca */}
+                <div className="text-center mb-8">
+                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-600 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md mb-3">
+                        ✨ Maria Charmosa · Consultoria Maxi Silva
+                    </div>
+                    <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                        Mapeamento DISC
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1">Ferramenta de autoconhecimento e performance no varejo</p>
+                </div>
 
-                {/* Barra de Progresso (Visível apenas na Etapa 2) */}
+                {/* Stepper / Indicador de Etapas */}
+                <div className="flex items-center justify-center gap-2 mb-8">
+                    <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${etapa === 1 ? 'bg-pink-600 text-white shadow-sm' : 'bg-slate-100 text-slate-500'}`}>
+                        <span>1</span> Identificação
+                    </div>
+                    <div className="w-8 h-0.5 bg-slate-200"></div>
+                    <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${etapa === 2 ? 'bg-pink-600 text-white shadow-sm' : 'bg-slate-100 text-slate-500'}`}>
+                        <span>2</span> Questionário
+                    </div>
+                    <div className="w-8 h-0.5 bg-slate-200"></div>
+                    <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${etapa === 3 ? 'bg-pink-600 text-white shadow-sm' : 'bg-slate-100 text-slate-500'}`}>
+                        <span>3</span> Resultado
+                    </div>
+                </div>
+
+                {/* Barra de Progresso do Teste */}
                 {etapa === 2 && (
-                    <div className="mb-6 bg-gray-50 p-3 rounded-xl border border-gray-100">
-                        <div className="flex justify-between text-xs font-semibold text-gray-600 mb-1.5">
-                            <span>Progresso do Questionário</span>
-                            <span>{gruposPreenchidos} de 24 grupos ({progressoPct}%)</span>
+                    <div className="mb-8 bg-slate-50 p-4 rounded-2xl border border-slate-100 shadow-inner">
+                        <div className="flex justify-between text-xs font-semibold text-slate-600 mb-2">
+                            <span>Progresso do Teste</span>
+                            <span className="text-pink-600 font-bold">{gruposPreenchidos} de 24 grupos ({progressoPct}%)</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                            <div className="bg-brand-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progressoPct}%` }}></div>
+                        <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden p-0.5 bg-slate-100 border border-slate-200">
+                            <div className="bg-gradient-to-r from-pink-500 to-rose-600 h-full rounded-full transition-all duration-500" style={{ width: `${progressoPct}%` }}></div>
                         </div>
                     </div>
                 )}
 
-                {/* Conteúdo das Etapas */}
-                <section>
+                {/* Componentes Dinâmicos */}
+                <main className="transition-all duration-300">
                     {etapa === 1 && (
                         <EtapaIdentificacao 
                             dadosUser={dadosUser} 
@@ -142,13 +159,13 @@ export default function App() {
                             onReiniciar={reiniciar} 
                         />
                     )}
-                </section>
-            </div>
+                </main>
 
-            {/* Rodapé discreto */}
-            <footer className="mt-6 text-center text-xs text-brand-700/70 font-medium">
-                © Maria Charmosa — Desenvolvimento de Equipe e Performance no Varejo
-            </footer>
-        </main>
+                {/* Rodapé Interno */}
+                <footer className="mt-10 pt-6 border-t border-slate-100 text-center text-xs text-slate-400 font-medium">
+                    © Maria Charmosa · Uso interno sob consultoria Maxi Silva
+                </footer>
+            </div>
+        </div>
     );
 }
