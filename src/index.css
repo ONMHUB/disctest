@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #fce4ec;
-  color: #333;
+@layer base {
+  body {
+    background-color: #fce4ec;
+    color: #1e293b;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
 }
